@@ -18,7 +18,7 @@ const upload = multer({ storage: storage });
 // POST endpoint for creating a new card
 router.post('/', upload.single('image'), (req, res) => {
     const { name, type, colour } = req.body;
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+    const imageUrl = req.file ? `http://localhost:5000/uploads/${req.file.filename}` : null;
 
     const newCard = new Card({
         name,
@@ -56,7 +56,7 @@ router.get('/:id', (req, res) => {
 router.put('/:id', upload.single('image'), (req, res) => {
     const updates = req.body;
     if (req.file) {
-        updates.imageUrl = `/uploads/${req.file.filename}`;
+        updates.imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
     }
 
     Card.findByIdAndUpdate(req.params.id, updates, { new: true })
