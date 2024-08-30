@@ -9,28 +9,27 @@ function SearchBar() {
   const [searched, setSearched] = useState(false);
   const [sortOption, setSortOption] = useState('name');
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-  
-    try {
-      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`); // Update the endpoint to /api/search
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`HTTP error! status: ${response.status}, ${errorText}`);
-      }
-  
-      const data = await response.json();
-      setResults(data);
-      setError(null);
-      setSearched(true);
-    } catch (error) {
-      console.error('Error during search:', error);
-      setError('There was an issue with the search. Please try again.');
+const handleSearch = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`); // Note the /api prefix
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP error! status: ${response.status}, ${errorText}`);
     }
-  };
-  
-  
+
+    const data = await response.json();
+    setResults(data);
+    setError(null);
+    setSearched(true);
+  } catch (error) {
+    console.error('Error during search:', error);
+    setError('There was an issue with the search. Please try again.');
+  }
+};
+
 
   const handleClearSearch = () => {
     setQuery('');

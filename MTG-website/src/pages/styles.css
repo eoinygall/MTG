@@ -112,6 +112,23 @@ nav a:hover {
   background-color: #e53935;    /* Darker red on hover */
 }
 
+.delete-all-button {
+  background-color: #f44336;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.delete-all-button:hover {
+  background-color: #e53935;
+}
+
+
 /* Form Styling */
 form {
   background-color: #2C2C2C;
@@ -188,7 +205,7 @@ footer {
   display: flex;             /* Flexbox layout for evenly spaced items */
   justify-content: space-around;  /* Evenly distribute items */
   align-items: center;       /* Center items vertically */
-  padding: 10px 0;           /* Padding for spacing */
+  padding: 5px 0;           /* Padding for spacing */
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
   z-index: 1000;             /* Ensure it stays on top of other content */
 }
@@ -200,7 +217,7 @@ footer {
   display: flex;             /* Flexbox to align icon and text */
   flex-direction: column;    /* Stack icon on top of text */
   align-items: center;       /* Center icon and text */
-  padding: 10px;             /* Padding around the items */
+  padding: 5px;             /* Padding around the items */
   transition: background-color 0.3s, color 0.3s;  /* Smooth transitions */
 }
 
@@ -297,34 +314,50 @@ body {
 
 /* Search Bar and Results Styling */
 .search-bar-container {
-  margin: 20px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the elements horizontally */
+  justify-content: center; /* Center the elements vertically */
+  padding: 20px;
+  background-color: transparent; /* Set background to transparent */
+  border-radius: 10px;
+  box-shadow: none; /* Remove the box shadow */
+  max-width: 400px;
+  margin: 0 auto;
 }
 
+
 .search-form {
-  display: inline-block;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Ensure the form takes full width of its container */
+  align-items: center;
 }
 
 .search-input {
-  padding: 10px;
+  padding: 10px 15px;
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #555;
-  width: 300px;
+  width: 100%; /* Make input take full width */
+  max-width: 350px; /* Add a max-width to ensure it doesn’t get too wide */
   background-color: #444;
   color: #eaeaea;
-  margin-right: 10px;
+  margin-bottom: 10px; /* Add space between input and button */
 }
 
-.search-button, .clear-button {
+.search-button {
   padding: 10px 20px;
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
   border: none;
   color: white;
+  background-color: #4CAF50;
+  width: 100%; /* Make button take full width */
+  max-width: 350px; /* Add a max-width to match the input */
 }
+
 
 .search-button {
   background-color: #4CAF50;
@@ -335,13 +368,27 @@ body {
 }
 
 .clear-button {
-  background-color: #f44336;
-  margin-left: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background-color: #f44336; /* Red background color */
+  margin-left: 10px; /* Space between the search button and clear button */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
 }
 
 .clear-button:hover {
-  background-color: #e53935;
+  background-color: #e53935; /* Darker red on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
 }
+
+.clear-button:active {
+  background-color: #d32f2f; /* Even darker red when pressed */
+  transform: translateY(1px); /* Slight press effect */
+}
+
 
 .error-message {
   color: red;
@@ -363,9 +410,18 @@ body {
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #555;
-  background-color: #444;
-  color: #eaeaea;
+  background-color: #444; /* Dark background to match the theme */
+  color: #eaeaea; /* Light text color */
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
 }
+
+.sort-select:hover {
+  background-color: #333; /* Slightly darker background on hover */
+  color: #f0e68c; /* Change text color on hover */
+}
+
 
 .results-list {
   list-style-type: none;
@@ -400,4 +456,48 @@ body {
   border-radius: 8px;
   border: 2px solid #555;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.search-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the elements horizontally */
+  justify-content: center; /* Center the elements vertically */
+  padding: 20px;
+  background-color: transparent; /* Set background to transparent */
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+
+.search-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background-color: #4CAF50;
+  margin-right: 10px; /* Space between buttons */
+}
+
+.search-button:hover {
+  background-color: #45a049;
+}
+
+.clear-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background-color: #f44336;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.clear-button:hover {
+  background-color: #e53935;
+  transform: translateY(-2px);
 }
