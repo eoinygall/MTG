@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate  } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import './styles.css';  // Ensure you import the CSS for styling
 
 function AddCardPage() {
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ function AddCardPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevents the default form submission behavior
-
+  
     const formData = new FormData();
     formData.append('name', cardDetails.name);
     formData.append('type', cardDetails.type);
@@ -53,9 +53,9 @@ function AddCardPage() {
     if (cardDetails.image) {
         formData.append('image', cardDetails.image);
     }
-
+  
     try {
-        const response = await fetch('http://localhost:5000/cards', {
+        const response = await fetch('http://localhost:4000/api/cards', {
             method: 'POST',
             body: formData // FormData will correctly handle the image
         });
@@ -64,19 +64,19 @@ function AddCardPage() {
             console.log('Card added successfully:', result);
             navigate('/'); // Redirect to the homepage after successful upload
         } else {
-            const error = await response.text(); // Gets text from the response body that includes the error message
-            throw new Error('Failed to add card: ' + error);
+            const errorText = await response.text();
+            throw new Error('Failed to add card: ' + errorText);
         }
     } catch (error) {
         console.error('Error submitting form:', error);
     }
-};
-
+  };
+  
   return (
     <div className="add-card-container">
       <h1>Add Card Details</h1>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>Name:</label>
           <input
             type="text"
@@ -86,7 +86,7 @@ function AddCardPage() {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Type:</label>
           <input
             type="text"
@@ -96,7 +96,7 @@ function AddCardPage() {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Colour:</label>
           <input
             type="text"
@@ -106,7 +106,7 @@ function AddCardPage() {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Image:</label>
           <input
             type="file"

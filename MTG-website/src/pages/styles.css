@@ -1,0 +1,403 @@
+/* General Styles */
+body {
+  background-color: #2C2C2C; /* Dark background */
+  color: #EAEAEA; /* Light text color */
+  font-family: 'Beleren', 'Garamond', serif; /* Magic: The Gathering fonts */
+  margin: 0;
+  padding: 0;
+}
+
+/* Container Styling */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header and Navigation Bar */
+header {
+  background-color: #1C1C1C; /* Darker background for header */
+  padding: 15px 0;
+  text-align: center;
+  border-bottom: 2px solid #A40000; /* Red border to represent the MTG red mana */
+}
+
+header h1 {
+  font-family: 'Beleren', serif; /* Special MTG font */
+  font-size: 36px;
+  color: #F0E68C; /* Gold text */
+}
+
+nav {
+  text-align: center;
+  margin-top: 10px;
+}
+
+nav a {
+  color: #EAEAEA;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 18px;
+  font-family: 'Beleren', serif;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+nav a:hover {
+  background-color: #A40000; /* Red hover effect */
+}
+
+/* General Card Styles */
+.card {
+  background-color: #333;       /* Dark background for the card */
+  border: 2px solid #555;       /* Darker border */
+  border-radius: 10px;          /* Rounded corners */
+  padding: 20px;
+  margin: 20px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); /* Subtle shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.card:hover {
+  transform: translateY(-5px);  /* Slight lift on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.8); /* Deeper shadow on hover */
+}
+
+.card h2 {
+  font-family: 'Beleren', serif; /* Magic: The Gathering themed font */
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #f0e68c;              /* Gold color for card title */
+}
+
+.card p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #eaeaea;              /* Light text color */
+}
+
+.card img {
+  max-width: 100%;
+  border-radius: 8px;           /* Rounded corners for images */
+  border: 2px solid #555;       /* Border around images */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8); /* Shadow around images */
+  margin-bottom: 10px;
+}
+
+.card button {
+  background-color: #4CAF50;    /* Green button */
+  color: white;
+  font-size: 14px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;           /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.card button:hover {
+  background-color: #45a049;    /* Darker green on hover */
+}
+
+.card .delete-button {
+  background-color: #f44336;    /* Red button for delete */
+  margin-left: 10px;            /* Space between buttons */
+}
+
+.card .delete-button:hover {
+  background-color: #e53935;    /* Darker red on hover */
+}
+
+/* Form Styling */
+form {
+  background-color: #2C2C2C;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+form label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #EAEAEA;
+}
+
+form input[type="text"],
+form input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #333;
+  color: #EAEAEA;
+}
+
+form button {
+  width: 100%;
+}
+
+/* Footer */
+footer {
+  background-color: #1C1C1C;
+  color: #EAEAEA;
+  padding: 15px 0;
+  text-align: center;
+  border-top: 2px solid #A40000;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+
+@font-face {
+  font-family: 'Beleren';
+  src: url('../assets/fonts/belerensmallcaps-bold.ttf') format('truetype'); /* Adjust the path if necessary */
+  font-weight: normal;
+}
+
+.card {
+  background-color: #333;
+  border: 2px solid #555;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  display: block; /* Ensure cards are being displayed */
+  visibility: visible;
+}
+
+/* General Styles for Bottom Tab Bar */
+.bottom-tab-bar {
+  position: fixed;           /* Stick the tab bar to the bottom of the viewport */
+  bottom: 0;                 /* Align it to the bottom */
+  left: 0;
+  width: 100%;               /* Make it span the entire width of the viewport */
+  background-color: #333;    /* Dark background */
+  color: #fff;               /* White text color */
+  display: flex;             /* Flexbox layout for evenly spaced items */
+  justify-content: space-around;  /* Evenly distribute items */
+  align-items: center;       /* Center items vertically */
+  padding: 10px 0;           /* Padding for spacing */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+  z-index: 1000;             /* Ensure it stays on top of other content */
+}
+
+.bottom-tab-bar a {
+  color: #fff;               /* White text for links */
+  text-decoration: none;     /* Remove underline from links */
+  font-size: 18px;           /* Font size for text */
+  display: flex;             /* Flexbox to align icon and text */
+  flex-direction: column;    /* Stack icon on top of text */
+  align-items: center;       /* Center icon and text */
+  padding: 10px;             /* Padding around the items */
+  transition: background-color 0.3s, color 0.3s;  /* Smooth transitions */
+}
+
+.bottom-tab-bar a:hover {
+  background-color: #555;    /* Slightly lighter background on hover */
+  color: #f0e68c;            /* Gold color for text and icon on hover */
+}
+
+.bottom-tab-bar a .fa-icon {
+  font-size: 24px;           /* Larger icon size */
+  margin-bottom: 5px;        /* Space between icon and text */
+}
+
+.bottom-tab-bar a span {
+  font-size: 14px;           /* Smaller text size below the icon */
+}
+
+.bottom-tab-bar .active {
+  background-color: #f0e68c; /* Gold background for active item */
+  color: #333;               /* Dark text for active item */
+  font-weight: bold;         /* Bold font for active item */
+}
+
+/* General Form Styles */
+.add-card-container {
+  background-color: #2c2c2c;  /* Dark background for the form container */
+  padding: 20px;
+  border-radius: 10px;         /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); /* Subtle shadow for depth */
+  max-width: 500px;            /* Max width for the form */
+  margin: 40px auto;           /* Center the form on the page */
+  color: #eaeaea;              /* Light text color */
+}
+
+.add-card-container h1 {
+  color: #f0e68c;              /* Gold color for the form title */
+  text-align: center;          /* Centered title */
+  margin-bottom: 20px;         /* Space below the title */
+  font-family: 'Beleren', serif; /* Magic: The Gathering themed font */
+}
+
+.add-card-container form {
+  display: flex;
+  flex-direction: column;      /* Stack form elements vertically */
+}
+
+.add-card-container label {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #eaeaea;              /* Light text color */
+}
+
+.add-card-container input[type="text"],
+.add-card-container input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #555;       /* Darker border */
+  border-radius: 5px;           /* Rounded corners */
+  background-color: #444;       /* Dark background for inputs */
+  color: #eaeaea;               /* Light text color */
+  margin-bottom: 20px;          /* Space below each input */
+}
+
+.add-card-container input[type="file"] {
+  padding: 5px;
+}
+
+.add-card-container button {
+  background-color: #4CAF50;   /* Green button */
+  color: white;
+  font-size: 16px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;          /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-card-container button:hover {
+  background-color: #45a049;   /* Darker green on hover */
+}
+
+.add-card-container .image-preview {
+  max-width: 100%;
+  margin-top: 15px;
+  border-radius: 5px;          /* Rounded corners for the image preview */
+  border: 1px solid #555;      /* Border around the image preview */
+}
+body {
+  background: url('../assets/Dragon-Cultist-by-Cristi-Balanescu-1.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Search Bar and Results Styling */
+.search-bar-container {
+  margin: 20px;
+  text-align: center;
+}
+
+.search-form {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  width: 300px;
+  background-color: #444;
+  color: #eaeaea;
+  margin-right: 10px;
+}
+
+.search-button, .clear-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  color: white;
+}
+
+.search-button {
+  background-color: #4CAF50;
+}
+
+.search-button:hover {
+  background-color: #45a049;
+}
+
+.clear-button {
+  background-color: #f44336;
+  margin-left: 10px;
+}
+
+.clear-button:hover {
+  background-color: #e53935;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 20px;
+}
+
+.search-results {
+  margin-top: 20px;
+}
+
+.sort-options {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #eaeaea;
+}
+
+.sort-select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background-color: #444;
+  color: #eaeaea;
+}
+
+.results-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.result-card {
+  background-color: #333;
+  border: 2px solid #555;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.result-card strong {
+  font-family: 'Beleren', serif;
+  font-size: 24px;
+  color: #f0e68c;
+}
+
+.card-image-container {
+  margin-top: 10px;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 2px solid #555;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}

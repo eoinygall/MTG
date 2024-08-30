@@ -1,87 +1,123 @@
 const express = require('express');
-const router = express.Router();
 const multer = require('multer');
-const Card = require('../models/Card'); // Adjust path as necessary to your Card model
+const Card = require('../models/Card');  // Adjust the path based on your project structure
+const router = express.Router();
 
-// Set up multer for file storage
+// Set up multer for file uploads
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/'); // Ensure this directory exists
-    },
-    filename: function(req, file, cb) {
-        cb(null, `${file.fieldname}-${Date.now()}${file.originalname}`);
-    }
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');  // Save the uploaded images to the 'uploads' directory
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);  // Name the file with a timestamp to avoid duplicates
+  }
 });
 
 const upload = multer({ storage: storage });
 
-// POST endpoint for creating a new card
-router.post('/', upload.single('image'), (req, res) => {
-    const { name, type, colour } = req.body;
-    const imageUrl = req.file ? `http://localhost:5000/uploads/${req.file.filename}` : null;
+// Route to get all cards
+router.get('/cards', async (req, res) => {
+  try {
+    const cards = await Card.find({});
+    res.send(cards);
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to fetch cards' });
+  }
+});
 
-    const newCard = new Card({
-        name,
-        type,
-        colour,
-        imageUrl
+// Route to add a new card
+router.post('/cards', upload.single('image'), async (req, res) => {
+  try {
+    const card = new Card({
+      name: req.body.name,
+      type: req.body.type,
+      colour: req.body.colour,
+      imageUrl: req.file ? `uploads/${req.file.filename}` : null  // Save relative path
     });
-
-    newCard.save()
-        .then(card => res.status(201).json(card))
-        .catch(err => res.status(500).json({ message: err.message }));
+    await card.save();
+    res.status(201).send(card);  // Respond with the created card
+  } catch (error) {
+    console.error('Error adding card:', error);
+    res.status(400).send({ error: 'Failed to add card' });
+  }
 });
 
-// GET endpoint for retrieving all cards
-router.get('/', (req, res) => {
-    Card.find()
-        .then(cards => res.json(cards))
-        .catch(err => res.status(500).json({ message: err.message }));
+
+// Route to delete a specific card by ID
+router.delete('/cards/:id', async (req, res) => {
+  try {
+    const card = await Card.findByIdAndDelete(req.params.id);
+    if (!card) {
+      return res.status(404).send({ error: 'Card not found' });
+    }
+    res.send({ message: 'Card deleted successfully', card });
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to delete card' });
+  }
 });
 
-// GET endpoint to retrieve a single card by ID
-router.get('/:id', (req, res) => {
-    Card.findById(req.params.id)
-        .then(card => {
-            if (card) {
-                res.json(card);
-            } else {
-                res.status(404).json({ message: 'Card not found' });
-            }
-        })
-        .catch(err => res.status(500).json({ message: err.message }));
+// Route to delete all cards
+router.delete('/cards', async (req, res) => {
+  try {
+    await Card.deleteMany({});
+    res.send({ message: 'All cards deleted successfully' });
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to delete all cards' });
+  }
 });
 
-// PUT endpoint to update a card by ID
-router.put('/:id', upload.single('image'), (req, res) => {
-    const updates = req.body;
-    if (req.file) {
-        updates.imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+// Route to update a specific card by ID
+router.put('/cards/:id', upload.single('image'), async (req, res) => {
+  try {
+    const updatedCard = {
+      name: req.body.name,
+      type: req.body.type,
+      colour: req.body.colour,
+      imageUrl: req.file ? req.file.path : req.body.imageUrl  // Use the new image if uploaded, otherwise keep the existing one
+    };
+
+    const card = await Card.findByIdAndUpdate(req.params.id, updatedCard, { new: true, runValidators: true });
+
+    if (!card) {
+      return res.status(404).send({ error: 'Card not found' });
     }
 
-    Card.findByIdAndUpdate(req.params.id, updates, { new: true })
-        .then(card => {
-            if (card) {
-                res.json(card);
-            } else {
-                res.status(404).json({ message: 'Card not found' });
-            }
-        })
-        .catch(err => res.status(500).json({ message: err.message }));
+    res.send(card);
+  } catch (error) {
+    res.status(400).send({ error: 'Failed to update card' });
+  }
 });
 
-// DELETE endpoint to delete a card by ID
-router.delete('/:id', async (req, res) => {
-    try {
-        const card = await Card.findOneAndDelete({ _id: req.params.id });
-        if (!card) {
-            return res.status(404).send({ message: 'Card not found' });
-        }
-        res.status(200).send({ message: 'Card deleted successfully' });
-    } catch (error) {
-        console.error('Error deleting card:', error);
-        res.status(500).send({ message: 'Failed to delete card' });
+// Route to get a specific card by ID
+router.get('/cards/:id', async (req, res) => {
+  try {
+    const card = await Card.findById(req.params.id);
+    if (!card) {
+      return res.status(404).send({ error: 'Card not found' });
     }
+    res.send(card);
+  } catch (error) {
+    console.error('Error fetching card:', error);
+    res.status(500).send({ error: 'Failed to fetch card' });
+  }
+});
+
+router.get('/search', async (req, res) => {
+  const { q } = req.query;
+
+  try {
+    const results = await Card.find({
+      $or: [
+        { name: { $regex: q, $options: 'i' } },  // Case-insensitive search by name
+        { type: { $regex: q, $options: 'i' } }   // Case-insensitive search by type
+      ]
+    });
+    
+    res.json(results);
+  } catch (err) {
+    console.error('Error fetching search results:', err);
+    res.status(500).send('Server Error');
+  }
 });
 
 module.exports = router;
