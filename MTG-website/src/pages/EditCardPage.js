@@ -8,7 +8,6 @@ function EditCardPage() {
   const [cardDetails, setCardDetails] = useState(null);  // State to hold the card details
   const [loading, setLoading] = useState(true);  // State to track loading status
   const [error, setError] = useState(null);  // State to track errors
-  const [imagePreview, setImagePreview] = useState(''); // State to store the image preview URL
 
   useEffect(() => {
     // Fetch the card details by ID
@@ -22,7 +21,6 @@ function EditCardPage() {
       .then(data => {
         setCardDetails(data);  // Set the card details in state
         setLoading(false);  // Set loading to false after data is received
-        setImagePreview(`http://localhost:4000/${data.imageUrl}`); // Set the existing image URL as the preview
       })
       .catch(error => {
         console.error('Error fetching card details:', error);
@@ -40,22 +38,10 @@ function EditCardPage() {
   };
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
     setCardDetails({
       ...cardDetails,
-      image: file
+      image: event.target.files[0]
     });
-
-    // Generate a preview of the image
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setImagePreview('');
-    }
   };
 
   const handleSubmit = async (event) => {
@@ -95,7 +81,7 @@ function EditCardPage() {
 
   return (
     <div className="edit-card-container">
-      <h1>Edit Card Details</h1>
+      <h1 className="form-title">Edit Card Details</h1> {/* Updated title to match add card page */}
       <form onSubmit={handleSubmit} className="edit-card-form">
         <div className="form-group">
           <label className="form-label">Name:</label>
@@ -139,11 +125,6 @@ function EditCardPage() {
             className="form-input-file"
           />
         </div>
-        {imagePreview && (
-           <div className="image-preview-container">
-            <img src={imagePreview} alt={cardDetails.name || 'Card Preview'} className="image-preview" />
-             </div>
-            )}
         <button type="submit" className="form-button">Save Changes</button>
       </form>
     </div>
