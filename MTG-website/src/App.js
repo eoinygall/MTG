@@ -1,23 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';  // Import HomePage
 import AddCardPage from './pages/AddCardPage';
-import EditCardPage from './pages/EditCardPage';  // Import the EditCardPage
-import SearchBar from './components/searchBar';
+import EditCardPage from './pages/EditCardPage';
 import BottomTabBar from './components/BottomTabBar';
-import '../src/pages/styles.css';
+import './pages/styles.css';
 
 function App() {
   return (
     <Router>
       <div className="page-content">
         <Routes>
-          <Route path="/" element={<SearchBar />} />  {/* Render SearchBar which handles HomePage */}
+          <Route path="/" element={<HomePage />} />  {/* Render HomePage at root */}
           <Route path="/add-card" element={<AddCardPage />} />
-          <Route path="/edit-card/:id" element={<EditCardPage />} />  {/* Add the edit route */}
+          <Route path="/edit-card/:id" element={<EditCardPage />} />
         </Routes>
       </div>
-      
-      <BottomTabBar /> {/* This places the BottomTabBar at the bottom of every page */}
+      <BottomTabBar />
     </Router>
   );
 }

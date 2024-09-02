@@ -32,17 +32,17 @@ app.get('/', (req, res) => {
   });
   
 // Define the search route
-// Define the search route
 app.get('/api/search', async (req, res) => {
   try {
-      const query = req.query.q;
+      const query = req.query.q.toLowerCase();
       const results = await Card.find({
           $or: [
-              { name: { $regex: query, $options: 'i' } }, // Search by name
-              { type: { $regex: query, $options: 'i' } }  // Search by type
+              { name: { $regex: query, $options: 'i' } },
+              { type: { $regex: query, $options: 'i' } },
+              { colour: { $regex: query, $options: 'i' } }
           ]
       });
-      res.json(results); // Return the search results as JSON
+      res.json(results);
   } catch (err) {
       console.error('Search error:', err);
       res.status(500).json({ error: 'Internal Server Error' });

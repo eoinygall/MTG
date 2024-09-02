@@ -8,6 +8,7 @@ function EditCardPage() {
   const [cardDetails, setCardDetails] = useState(null);  // State to hold the card details
   const [loading, setLoading] = useState(true);  // State to track loading status
   const [error, setError] = useState(null);  // State to track errors
+  const [imagePreview, setImagePreview] = useState(''); // State to store the image preview URL
 
   useEffect(() => {
     // Fetch the card details by ID
@@ -21,6 +22,7 @@ function EditCardPage() {
       .then(data => {
         setCardDetails(data);  // Set the card details in state
         setLoading(false);  // Set loading to false after data is received
+        setImagePreview(`http://localhost:4000/${data.imageUrl}`); // Set the existing image URL as the preview
       })
       .catch(error => {
         console.error('Error fetching card details:', error);
@@ -38,10 +40,22 @@ function EditCardPage() {
   };
 
   const handleFileChange = (event) => {
+    const file = event.target.files[0];
     setCardDetails({
       ...cardDetails,
-      image: event.target.files[0]
+      image: file
     });
+
+    // Generate a preview of the image
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview('');
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -82,46 +96,55 @@ function EditCardPage() {
   return (
     <div className="edit-card-container">
       <h1>Edit Card Details</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
+      <form onSubmit={handleSubmit} className="edit-card-form">
+        <div className="form-group">
+          <label className="form-label">Name:</label>
           <input
             type="text"
             name="name"
             value={cardDetails.name || ''}
             onChange={handleInputChange}
             required
+            className="form-input"
           />
         </div>
-        <div>
-          <label>Type:</label>
+        <div className="form-group">
+          <label className="form-label">Type:</label>
           <input
             type="text"
             name="type"
             value={cardDetails.type || ''}
             onChange={handleInputChange}
             required
+            className="form-input"
           />
         </div>
-        <div>
-          <label>Colour:</label>
+        <div className="form-group">
+          <label className="form-label">Colour:</label>
           <input
             type="text"
             name="colour"
             value={cardDetails.colour || ''}
             onChange={handleInputChange}
             required
+            className="form-input"
           />
         </div>
-        <div>
-          <label>Image:</label>
+        <div className="form-group">
+          <label className="form-label">Image:</label>
           <input
             type="file"
             name="image"
             onChange={handleFileChange}
+            className="form-input-file"
           />
         </div>
-        <button type="submit">Save Changes</button>
+        {imagePreview && (
+           <div className="image-preview-container">
+            <img src={imagePreview} alt={cardDetails.name || 'Card Preview'} className="image-preview" />
+             </div>
+            )}
+        <button type="submit" className="form-button">Save Changes</button>
       </form>
     </div>
   );
